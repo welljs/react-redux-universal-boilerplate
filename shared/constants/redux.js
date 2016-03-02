@@ -1,0 +1,3 @@
+export const PAGE_INFO_WAITING = 'PAGE_INFO_WAITING ';
+export const PAGE_INFO_SUCCESS = 'PAGE_INFO_SUCCESS ';
+export const PAGE_INFO_FAIL = 'PAGE_INFO_FAIL ';
