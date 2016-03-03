@@ -7,7 +7,7 @@ import { safeRouteHooks } from '../shared/utils';
 import { routes } from '../shared/router';
 import reducer from '../shared/reducers/reducer';
 
-const store = createStore( safeRouteHooks(routes), reducer, window.__intialData );
+const store = createStore( safeRouteHooks(routes), reducer, window.__initialData.store );
 
 ReactDOM.render(
   <Provider>

@@ -25,7 +25,7 @@ export default class Html extends Component {
           {/* styles (will be present only in production with webpack extract text plugin) */}
           {
             assets.styles.map((style, key) =>{
-              return <link href={assets.styles[style]} key={`styles-key-${key}`} media="screen, projection" rel="stylesheet" type="text/css" charSet="UTF-8"/>
+              return <link href={ style } key={`styles-key-${key}`} media="screen, projection" rel="stylesheet" type="text/css" charSet="UTF-8"/>
             }
           )}
 
@@ -37,10 +37,10 @@ export default class Html extends Component {
         </head>
         <body>
           <div id="content" dangerouslySetInnerHTML={{__html: content}}></div>
-          <script dangerouslySetInnerHTML={{__html: `window.__data=${serialize(clientData)};`}} charSet="UTF-8"></script>
+          <script dangerouslySetInnerHTML={{__html: `window.__initialData=${serialize(clientData)};`}} charSet="UTF-8"></script>
           {
-            assets.scripts.map(index => {
-              return <script src={ assets.scripts[index] } key={`scripts-key-${index}`} charSet="UTF-8"></script>
+            assets.scripts.map((script, index) => {
+              return <script src={ script } key={`scripts-key-${index}`} charSet="UTF-8"></script>
             })
           }
         </body>

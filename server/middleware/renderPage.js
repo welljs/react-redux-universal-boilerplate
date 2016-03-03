@@ -14,7 +14,6 @@ import { routes } from '../../shared/router';
 
 const pretty = new PrettyError();
 
-
 export default function renderPage (req, res, next) {
   const store = createStore(routes, reducer);
 
@@ -23,6 +22,10 @@ export default function renderPage (req, res, next) {
       ReactDOM.renderToString(<Html assets={ assets } store={store}/>));
   }
 
+  //debug purpose only
+  if (true) {
+    return hydrateOnClient();
+  }
   store.dispatch(match(req.originalUrl, (error, redirectLocation, routerState) => {
     if (redirectLocation) {
       res.redirect(redirectLocation.pathname + redirectLocation.search);
@@ -40,7 +43,6 @@ export default function renderPage (req, res, next) {
         routerState.location.query = qs.parse(routerState.location.search);
       }
 
-      console.log('----------', store.getState());
       store.getState().router.then(() => {
         const component = (
           <Provider store={store} key="provider">

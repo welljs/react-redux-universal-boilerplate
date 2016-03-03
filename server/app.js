@@ -12,12 +12,11 @@ const app = new Express();
 const server = new http.Server(app);
 const pretty = new PrettyError();
 const serverPort = process.env.PORT;
-
-app.use(favicon(Path.join(__dirname, '../static', 'favicon.ico')));
-
+const staticRoot = Path.join(__dirname, '..', 'static');
 
 app.use(compression());
-app.use(Express.static(assets.root));
+app.use(favicon(Path.join(staticRoot, 'favicon.ico')));
+app.use(Express.static(staticRoot));
 app.use(checkAuth, renderPage);
 
 server.listen(serverPort, (err) => {

@@ -1,5 +1,5 @@
 import Path from 'path';
-const root = '/static/assets';
+const root = '/assets';
 
 function styles (files) {
   return files.map((file) => {
@@ -16,5 +16,5 @@ function scripts (files) {
 export default {
   root,
   'styles': styles(['main']),
-  'scripts': scripts(['app', 'vendors'])
+  'scripts': scripts(['vendors', 'app'])
 }
