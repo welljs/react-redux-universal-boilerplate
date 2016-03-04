@@ -7,7 +7,6 @@ import PrettyError from 'pretty-error';
 import { checkAuth, renderPage } from './middleware';
 import { assets } from './helpers';
 
-
 const app = new Express();
 const server = new http.Server(app);
 const pretty = new PrettyError();
@@ -15,7 +14,7 @@ const serverPort = process.env.PORT;
 const staticRoot = Path.join(__dirname, '..', 'static');
 
 app.use(compression());
-app.use(favicon(Path.join(staticRoot, 'favicon.ico')));
+app.use(favicon(Path.join(staticRoot, 'favicon_.ico')));
 app.use(Express.static(staticRoot));
 app.use(checkAuth, renderPage);
 

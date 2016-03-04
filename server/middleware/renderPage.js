@@ -23,9 +23,10 @@ export default function renderPage (req, res, next) {
   }
 
   //debug purpose only
-  if (true) {
+  if (false) {
     return hydrateOnClient();
   }
+
   store.dispatch(match(req.originalUrl, (error, redirectLocation, routerState) => {
     if (redirectLocation) {
       res.redirect(redirectLocation.pathname + redirectLocation.search);
