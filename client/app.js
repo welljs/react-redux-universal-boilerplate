@@ -10,8 +10,8 @@ import reducer from '../shared/reducers/reducer';
 const store = createStore( safeRouteHooks(routes), reducer, window.__initialData.store );
 
 ReactDOM.render(
-  <Provider>
-    <ReduxRouter store={ store } key="provider"/>
+  <Provider store={ store } key="provider">
+    <ReduxRouter routes={ routes(store) } />
   </Provider>,
   document.getElementById('content')
 );

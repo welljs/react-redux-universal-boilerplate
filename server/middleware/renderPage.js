@@ -10,7 +10,7 @@ import { match } from 'redux-router/server';
 import { createStore } from '../../shared/redux'
 import { Html, assets } from '../helpers';
 import reducer from '../../shared/reducers/reducer';
-import { routes } from '../../shared/router';
+import { routes, getRoutesStatus } from '../../shared/router';
 
 const pretty = new PrettyError();
 
@@ -20,11 +20,6 @@ export default function renderPage (req, res, next) {
   function hydrateOnClient() {
     res.send('<!doctype html>\n' +
       ReactDOM.renderToString(<Html assets={ assets } store={store}/>));
-  }
-
-  //debug purpose only
-  if (false) {
-    return hydrateOnClient();
   }
 
   store.dispatch(match(req.originalUrl, (error, redirectLocation, routerState) => {
@@ -51,14 +46,14 @@ export default function renderPage (req, res, next) {
           </Provider>
         );
 
-        const status = getStatusFromRoutes(routerState.routes);
+        const status = getRoutesStatus(routerState.routes);
         if (status) {
           res.status(status);
         }
         res.send('<!doctype html>\n' +
-          ReactDOM.renderToString(<Html assets={webpackIsomorphicTools.assets()} component={component} store={store}/>));
+          ReactDOM.renderToString(<Html assets={ assets } component={component} store={store}/>));
       }).catch((err) => {
-        console.error('DATA FETCHING ERROR:', pretty.render(err));
+        console.error('DATA FETCHING ERROR:', pretty.render(err.toString()));
         res.status(500);
         hydrateOnClient();
       });

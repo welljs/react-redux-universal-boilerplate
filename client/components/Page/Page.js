@@ -7,7 +7,7 @@ export default class Page extends Component {
   render() {
     return (
       <div>
-        this is page content
+        { this.props.children }
       </div>
     );
   }

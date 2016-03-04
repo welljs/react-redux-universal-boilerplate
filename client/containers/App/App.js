@@ -12,6 +12,7 @@ export default class App extends Component {
   render() {
     return (
       <div className="app">
+        <h3>App container</h3>
         <Page {...this.props}>
           { this.props.children }
         </Page>
