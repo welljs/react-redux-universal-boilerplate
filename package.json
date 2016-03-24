@@ -4,7 +4,27 @@
   "description": "Universal appication for both client side and server side, based on react and redux",
   "main": "client/app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "client_dev": "better-npm-run client_dev",
+    "admin_dev": "better-npm-run admin_dev"
+  },
+  "betterScripts": {
+    "client_dev": {
+      "command": "webpack --watch --config webpack/site.config.js",
+      "env": {
+        "APPNAME": "site",
+        "PORT": 4000,
+        "NODE_ENV": "development"
+      }
+    },
+    "admin_dev": {
+      "command": "webpack --config webpack/admin.config.js --watch",
+      "env": {
+        "APPNAME": "admin",
+        "PORT": 4400,
+        "NODE_ENV": "development"
+      }
+    }
   },
   "repository": {
     "type": "git",
@@ -32,22 +52,30 @@
     "webpack": "^1.12.14"
   },
   "dependencies": {
+    "autoprefixer-loader": "3.2.0",
+    "better-npm-run": "0.0.8",
     "body-parser": "^1.15.0",
     "compression": "^1.6.1",
+    "css-loader": "0.23.1",
     "express": "^4.13.4",
     "history": "^2.0.0",
     "multireducer": "^2.0.0",
+    "node-sass": "3.4.2",
     "path": "^0.12.7",
     "query-string": "^3.0.1",
     "react": "^0.14.7",
+    "react-css-modules": "3.7.6",
     "react-document-meta": "^2.0.2",
     "react-dom": "^0.14.7",
     "react-redux": "^4.4.0",
     "react-router": "^1.0.3",
     "redux": "3.0.4",
     "redux-router": "1.0.0-beta5",
+    "sass-loader": "3.2.0",
     "serialize-javascript": "^1.2.0",
     "serve-favicon": "^2.3.0",
-    "superagent": "^1.7.2"
+    "style-loader": "0.13.0",
+    "superagent": "^1.7.2",
+    "webpack-isomorphic-tools": "2.2.41"
   }
 }
