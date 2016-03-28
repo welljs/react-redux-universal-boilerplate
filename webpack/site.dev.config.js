@@ -10,11 +10,12 @@ const protocol = 'http';
 const HOST = 'localhost';
 const PORT = process.env.PORT;
 const APPNAME = process.env.APPNAME;
+const __APPNAME__ = JSON.stringify(APPNAME);
 
 module.exports = {
   context: Path.join(__dirname, '../'),
   entry: {
-    app: `./apps/${APPNAME}/client.js`,
+    app: `./src/apps/${APPNAME}/client.js`,
     vendors: [
       'react',
       'react-dom',
@@ -32,13 +33,11 @@ module.exports = {
     publicPath: `${protocol}://${HOST}:${PORT}/assets/dist/`,
     filename: 'app.js'
   },
-  devtool: 'source-map',
+  devtool: 'inline-source-map',
   resolve: {
     root: Path.resolve(__dirname),
     extensions: ['', '.js', '.jsx'],
-    modulesDirectories: [
-      'node_modules'
-    ]
+    modulesDirectories: [ 'node_modules', 'out']
   },
   module: {
     loaders: [
@@ -54,7 +53,11 @@ module.exports = {
       {
         test: /\.js/,
         loader: 'babel-loader',
-        exclude: /(node_modules)/,
+        include: [
+          Path.resolve(__dirname, `../src/apps/${APPNAME}`),
+          Path.resolve(__dirname, `../src/common`)
+        ],
+        // exclude: [/node_modules/, /out/],
         query: {
           cacheDirectory: true
         }
@@ -63,7 +66,7 @@ module.exports = {
   },
   plugins: [
     new webpack.optimize.CommonsChunkPlugin('vendors', 'vendors.js'),
-    new webpack.DefinePlugin({ __CLIENT__, __SERVER__, __DEVELOPMENT__ }),
+    new webpack.DefinePlugin({ __CLIENT__, __SERVER__, __DEVELOPMENT__, __APPNAME__ }),
     webpackIsomorphicToolsPlugin.development()
   ]
 };

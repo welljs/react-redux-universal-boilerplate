@@ -1,0 +1,15 @@
+{
+  "apps": [
+    {
+      "name": "site",
+      "script": ".bin/server.js",
+      "env": {
+        "APPNAME": "site",
+        "PORT": 5000
+      },
+      "env_production": {
+        "NODE_ENV": "production"
+      }
+    }
+  ]
+}

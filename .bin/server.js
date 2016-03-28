@@ -3,7 +3,7 @@ global.__CLIENT__ = false;
 global.__SERVER__ = true;
 global.__DEVELOPMENT__ = process.env.NODE_ENV === 'development';
 const Path = require('path');
-const appPath = `../apps/${ process.env.APPNAME }/server/app`;
+const appPath = `../src/apps/${ process.env.APPNAME }/server/app`;
 
 require('../server.babel');
 

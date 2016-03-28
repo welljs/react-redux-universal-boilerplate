@@ -5,12 +5,13 @@
   "main": "client/app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "client_dev": "better-npm-run client_dev",
+    "build": "webpack --verbose --colors --display-error-details --config webpack/site.prod.config.js",
+    "site_dev": "better-npm-run site_dev",
     "admin_dev": "better-npm-run admin_dev"
   },
   "betterScripts": {
-    "client_dev": {
-      "command": "webpack --watch --config webpack/site.config.js",
+    "site_dev": {
+      "command": "webpack --watch --config webpack/site.dev.config.js",
       "env": {
         "APPNAME": "site",
         "PORT": 4000,
@@ -36,6 +37,7 @@
     "url": "https://github.com/welljs/react-redux-universal-boilerplate/issues"
   },
   "devDependencies": {
+    "autoprefixer-loader": "3.2.0",
     "babel-cli": "^6.6.4",
     "babel-core": "^6.6.4",
     "babel-loader": "^6.2.4",
@@ -48,19 +50,23 @@
     "babel-preset-stage-1": "^6.5.0",
     "babel-preset-stage-2": "^6.5.0",
     "babel-preset-stage-3": "^6.5.0",
+    "better-npm-run": "0.0.8",
+    "clean-webpack-plugin": "0.1.8",
+    "css-loader": "0.23.1",
+    "extract-text-webpack-plugin": "1.0.1",
+    "node-sass": "3.4.2",
     "pretty-error": "^2.0.0",
+    "sass-loader": "3.2.0",
+    "strip-loader": "0.1.2",
+    "style-loader": "0.13.0",
     "webpack": "^1.12.14"
   },
   "dependencies": {
-    "autoprefixer-loader": "3.2.0",
-    "better-npm-run": "0.0.8",
     "body-parser": "^1.15.0",
     "compression": "^1.6.1",
-    "css-loader": "0.23.1",
     "express": "^4.13.4",
     "history": "^2.0.0",
     "multireducer": "^2.0.0",
-    "node-sass": "3.4.2",
     "path": "^0.12.7",
     "query-string": "^3.0.1",
     "react": "^0.14.7",
@@ -71,10 +77,8 @@
     "react-router": "^1.0.3",
     "redux": "3.0.4",
     "redux-router": "1.0.0-beta5",
-    "sass-loader": "3.2.0",
     "serialize-javascript": "^1.2.0",
     "serve-favicon": "^2.3.0",
-    "style-loader": "0.13.0",
     "superagent": "^1.7.2",
     "webpack-isomorphic-tools": "2.2.41"
   }

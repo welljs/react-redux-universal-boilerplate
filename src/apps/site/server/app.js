@@ -14,7 +14,7 @@ const renderPage = RenderPage({ routes });
 const app = new Express();
 const server = new http.Server(app);
 const serverPort = process.env.PORT;
-const staticRoot = Path.join(__dirname,  '../../../', `statics/${appName()}`);
+const staticRoot = Path.join(__dirname,  '../../../../', `statics/${appName()}`);
 
 app.use(compression());
 app.use(favicon(Path.join(staticRoot, 'favicon_.ico')));

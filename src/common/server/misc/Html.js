@@ -23,10 +23,9 @@ export default class Html extends Component {
           <link rel="shortcut icon" href="/favicon.ico" />
           <meta name="viewport" content="width=device-width, initial-scale=1" />
           {/* styles (will be present only in production with webpack extract text plugin) */}
-          {console.log(assets, '------>')}
           {
-            Object.keys(assets.assets).map((style, key) =>{
-              return <link href={ assets.assets[style] } key={`styles-key-${key}`} media="screen, projection" rel="stylesheet" type="text/css" charSet="UTF-8"/>
+            Object.keys(assets.styles).map((style, key) =>{
+              return <link href={ assets.styles[style] } key={`styles-key-${key}`} media="screen, projection" rel="stylesheet" type="text/css" charSet="UTF-8"/>
             }
           )}
         </head>
