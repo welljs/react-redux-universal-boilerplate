@@ -8,5 +8,4 @@ try {
   console.error('==>     ERROR: Error parsing your .babelrc.');
   console.error(err);
 }
-
 require('babel-core/register')(config);

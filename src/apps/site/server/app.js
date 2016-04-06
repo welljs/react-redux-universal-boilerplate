@@ -10,7 +10,11 @@ import { checkAuth, RenderPage } from '../../../common/server/middleware';
 import { appName } from '../../../common/utils/helpers';
 import { default as routes } from '../routes';
 
-const renderPage = RenderPage({ routes });
+//todo сделать индивидуальным для проекта
+import reducer from '../../../common/reducers/reducer';
+
+
+const renderPage = RenderPage({ routes, reducer });
 const app = new Express();
 const server = new http.Server(app);
 const serverPort = process.env.PORT;

@@ -22,7 +22,7 @@ module.exports = {
       'react-router',
       'redux',
       'react-redux',
-      'redux-router',
+      // 'redux-router',
       'history',
       'superagent',
       'multireducer'
@@ -59,7 +59,8 @@ module.exports = {
         ],
         // exclude: [/node_modules/, /out/],
         query: {
-          cacheDirectory: true
+          cacheDirectory: true,
+          plugins: ['transform-decorators-legacy']
         }
       }
     ]

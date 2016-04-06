@@ -1,12 +1,11 @@
 import { createStore as reduxCreateStore, applyMiddleware, compose } from 'redux';
-import { requestMiddleware, transitionMiddleware } from './middleware';
+import { requestMiddleware } from './middleware';
+import {syncHistory} from 'react-router-redux';
 
-const router = __CLIENT__ ? require( 'redux-router' ).reduxReactRouter : require( 'redux-router/server' ).reduxReactRouter;
-const createHistory = __CLIENT__ ? require( 'history/lib/createBrowserHistory' ) : require ( 'history/lib/createMemoryHistory' );
-
-export default function createStore (getRoutes, reducers, data) {
-  return compose(
-    router({getRoutes, createHistory}),
-    applyMiddleware(...[requestMiddleware, transitionMiddleware])
-  )(reduxCreateStore)(reducers, data);
+export default function createStore (history, reducer, data) {
+  const reduxRouterMiddleware = syncHistory(history);
+  let finalCreateStore = applyMiddleware(...[requestMiddleware, reduxRouterMiddleware])(reduxCreateStore);
+  const store = finalCreateStore(reducer, data);
+  reduxRouterMiddleware.listenForReplays(store);
+  return store;
 }
