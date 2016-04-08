@@ -1,4 +1,8 @@
 import { default as commonConfig } from '../../common/config';
-export default {...commonConfig, ...{
-  val1: 'this is a site config'
-}};
+
+let resultConfig = {...commonConfig};
+
+if (__SERVER__)
+  resultConfig.server = require('./server/config');
+
+export default {...resultConfig, ...{}};

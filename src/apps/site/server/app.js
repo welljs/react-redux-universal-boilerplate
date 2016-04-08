@@ -25,6 +25,25 @@ app.use(favicon(Path.join(staticRoot, 'favicon_.ico')));
 app.use(Express.static(staticRoot));
 app.use(checkAuth, renderPage);
 
+
+app.get('/project/:id', (req, res, next) => {
+  console.log('propopopop');
+  setTimeout(()=>{
+    res.send({id: req.params.id, name: 'superProject'})
+  }, 150);
+});
+
+app.get('/designer/:id', (req, res, next) => {
+  setTimeout(()=>{
+    res.send({id: req.params.id, name: 'Ivan Ivanov'})
+  }, 350);
+});
+
+app.use((req, res, next)=>{
+  console.log('sss');
+  res.status(404).send('not_found');
+});
+
 server.listen(serverPort, (err) => {
   if (err)
     return console.render(chalk.red(err));

@@ -12,7 +12,7 @@ import {project, designer} from '../../reducers';
   }}
 ])
 @connect(state => ({}))
-export default class About extends Component {
+export default class Designer extends Component {
   static propTypes = {};
 
   render() {

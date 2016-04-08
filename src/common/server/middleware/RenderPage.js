@@ -10,7 +10,8 @@ import { createStore } from '../../redux';
 import { Html } from '../misc';
 import { getRoutesStatus } from '../../router';
 import createHistory from 'react-router/lib/createMemoryHistory';
-import {request} from '../../../common/utils';
+import request from '../../../common/utils/request/server';
+
 
 const pretty = new PrettyError();
 
@@ -31,7 +32,7 @@ export default function RenderPage ({ routes, reducer }) {
     const {originalUrl: location} = req;
     const assets = webpackIsomorphicTools.assets();
     const history = createHistory(location);
-    const store = createStore(history, reducer);
+    const store = createStore({history, reducer, req});
 
     const args = {history, routes: routes(store), location};
     match(args, (error, redirectLocation, renderProps) => {
@@ -46,10 +47,10 @@ export default function RenderPage ({ routes, reducer }) {
         hydrateOnClient();
       } else {
 
-        loadOnServer({...renderProps, store, helpers: {request}}).then(() =>{
+        loadOnServer({...renderProps, store, helpers: {request: request(req)}}).then(() =>{
           const component = (
             <Provider store={store} key="provider">
-              <ReduxAsyncConnect {...renderProps} />
+              <ReduxAsyncConnect {...renderProps}/>
             </Provider>
           );
           const status = getRoutesStatus(renderProps.routes);

@@ -15,9 +15,11 @@ export default class Home extends Component {
   render() {
     return (
       <div className={`${styles.mainContainer} some-other-class`}>
-        <span className="nested">JJ</span>
-        <Link to="/about">About</Link>
-        this is home page!
+        <h3>Pages</h3>
+        <ul>
+          <li>Проект: <Link to="/project/dom_na_hruschiovke">Дом на Хрущевке</Link></li>
+          <li>Автор: <Link to="/designer/12">Вася</Link></li>
+        </ul>
       </div>
     );
   }

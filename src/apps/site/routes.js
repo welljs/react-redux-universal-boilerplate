@@ -1,13 +1,16 @@
 import React from 'react';
 import { IndexRoute, Route } from 'react-router';
-import { App, Home, About, NotFound } from './containers';
+import * as Pages  from './containers';
 
 export default ( store ) => {
+  
   return (
-    <Route path="/" component={ App }>
-      <IndexRoute component={ Home }/>
-      <Route path="about" component={ About }/>
-      <Route path="*" component={ NotFound } status={ 404 } />
+    <Route path="/" component={ Pages.App }>
+      <IndexRoute component={ Pages.Home }/>
+      <Route path="about" component={ Pages.About }/>
+      <Route path="designer/:id" component={Pages.Designer} />
+      <Route path="/project/:id" component={Pages.Project} />
+      <Route path="*" component={ Pages.NotFound } status={ 404 } />
     </Route>
   );
 }

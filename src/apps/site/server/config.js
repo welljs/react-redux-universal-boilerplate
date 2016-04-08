@@ -1,5 +1,6 @@
+const {HOST, PORT} = process.env;
 export default {
-  db: {
-    url: 'mongodb://localhost:27017/site'
-  }
+  protocol: 'http',
+  host: HOST || 'localhost',
+  port: PORT
 };

@@ -1,5 +1,5 @@
 'use strict';
-import { request } from '../../utils';
+import request from '../../utils/request';
 
 export default function ({ dispatch, getState }) {
   return next => action => {
