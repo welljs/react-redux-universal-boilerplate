@@ -13,7 +13,7 @@ const history = useScroll( () => browserHistory)();
 const store = createStore({history, reducer, data: window.__initialData.store});
 
 function routerRender (props) {
-  return <ReduxAsyncConnect {...props} helpers={{request}} filter={item => !item.deffered}/>
+  return <ReduxAsyncConnect {...props} helpers={{request: request()}} filter={item => !item.deffered}/>
 }
 
 ReactDOM.render(

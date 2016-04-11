@@ -46,7 +46,6 @@ export default function RenderPage ({ routes, reducer }) {
         res.status(404);
         hydrateOnClient();
       } else {
-
         loadOnServer({...renderProps, store, helpers: {request: request(req)}}).then(() =>{
           const component = (
             <Provider store={store} key="provider">

@@ -15,11 +15,11 @@ import reducer, {load as loadProject} from '../../reducers/project';
 }))
 export default class Project extends Component {
   static propTypes = {
-    project: PropTypes.object
+    project: PropTypes.object.isRequired
   };
 
   state = {
-    error: this.props.project.error
+    // error: this.props.project.error
   };
 
   componentWillMount () {

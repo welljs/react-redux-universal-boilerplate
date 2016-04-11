@@ -14,7 +14,10 @@ export default function ({ dispatch, getState }) {
 
     const [ REQUEST, SUCCESS, FAILURE ] = types;
     next({...rest, type: REQUEST});
-    return promise( request )
+
+    const actionPromise = promise(request);
+
+    actionPromise
       .then(
         (result) => next({...rest, result, type: SUCCESS}),
         (error) => next({...rest, error, type: FAILURE})
@@ -22,6 +25,8 @@ export default function ({ dispatch, getState }) {
       .catch(err => {
         console.log('[REQUEST_MIDDLEWARE_ERROR]: ', err);
         next({...rest, err, FAILURE});
-      })
+      });
+
+    return actionPromise;
   }
 }

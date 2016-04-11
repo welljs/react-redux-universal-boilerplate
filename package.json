@@ -69,6 +69,7 @@
     "compression": "^1.6.1",
     "express": "^4.13.4",
     "history": "^2.0.0",
+    "http-proxy": "1.13.2",
     "multireducer": "^2.0.0",
     "path": "^0.12.7",
     "query-string": "^3.0.1",
