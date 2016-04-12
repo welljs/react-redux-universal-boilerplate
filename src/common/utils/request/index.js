@@ -1,4 +1,2 @@
-import createMethods from './createMethods';
-export default function request (url) {
-  return createMethods({url});
-}
+export {default as client} from './client';
+export {default as server} from './server';

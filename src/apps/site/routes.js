@@ -11,6 +11,7 @@ export default ( store ) => {
       <Route path="designer/:id" component={Pages.Designer} />
       <Route path="/project/:id" component={Pages.Project} />
       <Route path="*" component={ Pages.NotFound } status={ 404 } />
+      <Route path="*" component={ Pages.ErrorPage } status={ 500 } />
     </Route>
   );
 }

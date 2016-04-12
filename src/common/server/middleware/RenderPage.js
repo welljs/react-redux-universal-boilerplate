@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom/server';
-// import { ReduxRouter } from 'redux-router';
 import { Provider } from 'react-redux';
 import PrettyError from 'pretty-error';
 
@@ -10,8 +9,7 @@ import { createStore } from '../../redux';
 import { Html } from '../misc';
 import { getRoutesStatus } from '../../router';
 import createHistory from 'react-router/lib/createMemoryHistory';
-import request from '../../../common/utils/request/server';
-
+import {server as request} from '../../../common/utils/request';
 
 const pretty = new PrettyError();
 
@@ -32,7 +30,8 @@ export default function RenderPage ({ routes, reducer }) {
     const {originalUrl: location} = req;
     const assets = webpackIsomorphicTools.assets();
     const history = createHistory(location);
-    const store = createStore({history, reducer, req});
+    const requestHelper = request(req);
+    const store = createStore({history, reducer, requestHelper});
 
     const args = {history, routes: routes(store), location};
     match(args, (error, redirectLocation, renderProps) => {
@@ -46,7 +45,7 @@ export default function RenderPage ({ routes, reducer }) {
         res.status(404);
         hydrateOnClient();
       } else {
-        loadOnServer({...renderProps, store, helpers: {request: request(req)}}).then(() =>{
+        loadOnServer({...renderProps, store, helpers: {request: requestHelper}}).then(() =>{
           const component = (
             <Provider store={store} key="provider">
               <ReduxAsyncConnect {...renderProps}/>

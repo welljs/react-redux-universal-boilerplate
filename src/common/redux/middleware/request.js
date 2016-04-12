@@ -1,32 +1,32 @@
 'use strict';
-import request from '../../utils/request';
+export default function (request) {
+  return  function ({ dispatch, getState }) {
+    return next => action => {
 
-export default function ({ dispatch, getState }) {
-  return next => action => {
+      if ( typeof action === 'function' )
+        return action(dispatch, getState);
 
-    if ( typeof action === 'function' )
-      return action(dispatch, getState);
+      const { promise, types, ...rest } = action;
 
-    const { promise, types, ...rest } = action;
+      if ( !promise )
+        return next(action);
 
-    if ( !promise )
-      return next(action);
+      const [ REQUEST, SUCCESS, FAILURE ] = types;
+      next({...rest, type: REQUEST});
 
-    const [ REQUEST, SUCCESS, FAILURE ] = types;
-    next({...rest, type: REQUEST});
+      const actionPromise = promise(request);
 
-    const actionPromise = promise(request);
+      actionPromise
+        .then(
+          (result) => next({...rest, result, type: SUCCESS}),
+          (error) => next({...rest, error, type: FAILURE})
+        )
+        .catch(err => {
+          console.log('[REQUEST_MIDDLEWARE_ERROR]: ', err);
+          next({...rest, err, FAILURE});
+        });
 
-    actionPromise
-      .then(
-        (result) => next({...rest, result, type: SUCCESS}),
-        (error) => next({...rest, error, type: FAILURE})
-      )
-      .catch(err => {
-        console.log('[REQUEST_MIDDLEWARE_ERROR]: ', err);
-        next({...rest, err, FAILURE});
-      });
-
-    return actionPromise;
-  }
+      return actionPromise;
+    }
+  }  
 }

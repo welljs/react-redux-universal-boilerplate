@@ -8,11 +8,11 @@ import reducer, {load as loadProject} from '../../reducers/project';
 @asyncConnect([
   { key: 'project', promise: ({params, store:{dispatch}}) => dispatch(loadProject(params.id)) }
 ])
-@connect(state => ({
+// @connect(state => ({
   // error: state.project.error,
   // waiting: state.project.waiting,
   // project: state.project.data
-}))
+// }))
 export default class Project extends Component {
   static propTypes = {
     project: PropTypes.object.isRequired
