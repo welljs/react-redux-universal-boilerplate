@@ -4,3 +4,4 @@ export { default as About } from './About/About';
 export { default as NotFound } from './NotFound/NotFound';
 export {default as Designer} from './Designer/Designer';
 export {default as Project} from './Project/Project';
+export {default as ErrorPage} from './ErrorPage/ErrorPage';

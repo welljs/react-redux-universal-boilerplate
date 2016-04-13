@@ -9,7 +9,7 @@ import { createStore } from '../../redux';
 import { Html } from '../misc';
 import { getRoutesStatus } from '../../router';
 import createHistory from 'react-router/lib/createMemoryHistory';
-import {server as request} from '../../../common/utils/request';
+import {server as request} from '../../../common/utils/request-manager';
 
 const pretty = new PrettyError();
 
@@ -46,12 +46,13 @@ export default function RenderPage ({ routes, reducer }) {
         hydrateOnClient();
       } else {
         loadOnServer({...renderProps, store, helpers: {request: requestHelper}}).then(() =>{
+          const {errors} = store.getState();
           const component = (
             <Provider store={store} key="provider">
               <ReduxAsyncConnect {...renderProps}/>
             </Provider>
           );
-          const status = getRoutesStatus(renderProps.routes);
+          const status = (errors && !!errors.error) ? 500 : getRoutesStatus(renderProps.routes);
           res.status(status || 200);
           global.navigator = {userAgent: req.headers['user-agent']};
           res.send('<!doctype html>\n' +

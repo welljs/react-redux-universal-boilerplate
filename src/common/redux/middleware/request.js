@@ -1,4 +1,5 @@
 'use strict';
+import {addApiError} from '../../reducers/errors';
 export default function (request) {
   return  function ({ dispatch, getState }) {
     return next => action => {
@@ -19,7 +20,10 @@ export default function (request) {
       actionPromise
         .then(
           (result) => next({...rest, result, type: SUCCESS}),
-          (error) => next({...rest, error, type: FAILURE})
+          (error) => {
+            dispatch(addApiError(500, error));
+            return next({...rest, error, type: FAILURE})
+          }
         )
         .catch(err => {
           console.log('[REQUEST_MIDDLEWARE_ERROR]: ', err);

@@ -1,18 +1,19 @@
 export const API_FETCHING_ERROR = 'API_FETCHING_ERROR';
 
 const initialState = {
-  error: null,
+  reason: null,
+  status: null,
   type: null
 };
 
-export default function reducer ( state = initialState, action = {} ) {
-  switch ( action.type ) {
+export default function reducer ( state = initialState, {type, status, reason} = {} ) {
+  switch ( type ) {
     case API_FETCHING_ERROR:
-      return { ...state, error: action.reason, type: API_FETCHING_ERROR };
+      return { ...state, reason, status, type: API_FETCHING_ERROR };
     default: return state;
   }
 }
 
-export function addApiError (reason) {
-  return { type: API_FETCHING_ERROR, reason }
+export function addApiError (status, reason) {
+  return { type: API_FETCHING_ERROR, reason, status }
 }

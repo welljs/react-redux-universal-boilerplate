@@ -5,7 +5,7 @@ import { createStore } from '../../common/redux';
 import {Router, browserHistory} from 'react-router';
 import {ReduxAsyncConnect} from 'redux-async-connect';
 import useScroll from  'scroll-behavior/lib/useStandardScroll';
-import {client as requestHelper} from '../../common/utils/request';
+import {client as requestHelper} from '../../common/utils/request-manager';
 import routes from './routes';
 import reducer from '../../common/reducers/reducer';
 
