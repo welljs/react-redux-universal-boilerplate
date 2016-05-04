@@ -15,7 +15,7 @@
       "env": {
         "APPNAME": "site",
         "PORT": 4000,
-        "NODE_ENV": "development"
+        "NODE_ENV": "dev"
       }
     },
     "admin_dev": {
@@ -23,7 +23,7 @@
       "env": {
         "APPNAME": "admin",
         "PORT": 4400,
-        "NODE_ENV": "development"
+        "NODE_ENV": "dev"
       }
     }
   },
