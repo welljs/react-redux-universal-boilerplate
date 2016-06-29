@@ -1,0 +1,3 @@
+//useful in team collaboration. remove extension .dist to use this config.
+exports.client = {};
+exports.server = {};

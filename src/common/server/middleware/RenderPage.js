@@ -5,7 +5,7 @@ import PrettyError from 'pretty-error';
 
 import { match } from 'react-router';
 import { ReduxAsyncConnect, loadOnServer } from 'redux-async-connect';
-import { createStore } from '../../redux';
+import { default as createStore } from '../../redux/store/create';
 import { Html } from '../misc';
 import { getRoutesStatus } from '../../router';
 import createHistory from 'react-router/lib/createMemoryHistory';
@@ -13,13 +13,13 @@ import {server as request} from '../../../common/utils/request-manager';
 
 const pretty = new PrettyError();
 
-function hydrateOnClient(res) {
+function hydrateOnClient(res, store) {
   const assets = webpackIsomorphicTools.assets();
   res.send('<!doctype html>\n' +
     ReactDOM.renderToString(<Html assets={ assets } store={store}/>));
 }
 
-export default function RenderPage ({ routes, reducer }) {
+export default function RenderPage ({ routes }) {
   return function (req, res, next) {
     if (__DEVELOPMENT__) {
       // Do not cache webpack stats: the script file would change since
@@ -27,11 +27,12 @@ export default function RenderPage ({ routes, reducer }) {
       webpackIsomorphicTools.refresh();
     }
 
+    
     const {originalUrl: location} = req;
     const assets = webpackIsomorphicTools.assets();
     const history = createHistory(location);
     const requestHelper = request(req);
-    const store = createStore({history, reducer, requestHelper});
+    const store = createStore({history, null, requestHelper});
 
     const args = {history, routes: routes(store), location};
     match(args, (error, redirectLocation, renderProps) => {
@@ -40,10 +41,10 @@ export default function RenderPage ({ routes, reducer }) {
       } else if (error) {
         console.error('ROUTER ERROR:', pretty.render(error));
         res.status(500);
-        hydrateOnClient();
+        hydrateOnClient(res, store);
       } else if (!renderProps) {
         res.status(404);
-        hydrateOnClient();
+        hydrateOnClient(res, store);
       } else {
         loadOnServer({...renderProps, store, helpers: {request: requestHelper}}).then(() =>{
           const {errors} = store.getState();

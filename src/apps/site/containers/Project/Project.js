@@ -3,11 +3,11 @@ import React, { Component, PropTypes } from 'react';
 import {asyncConnect} from 'redux-async-connect';
 import {connect} from 'react-redux';
 import {request} from '../../../../common/utils';
-import reducer, {load as loadProject} from '../../reducers/project';
+import reducer, {load as loadProject} from '../../redux/project';
 
-@asyncConnect([
-  { key: 'project', promise: ({params, store:{dispatch}}) => dispatch(loadProject(params.id)) }
-])
+// @asyncConnect([
+//   { key: 'project', promise: ({params, store:{dispatch}}) => dispatch(loadProject(params.id)) }
+// ])
 // @connect(state => ({
   // error: state.project.error,
   // waiting: state.project.waiting,

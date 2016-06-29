@@ -5,17 +5,12 @@ import { Page } from '../../components';
 import { default as ErrorPage } from '../ErrorPage/ErrorPage';
 import {routeActions} from 'react-router-redux';
 import { asyncConnect } from 'redux-async-connect';
-import reducer, {load as loadRefs, isLoaded as isRefsLoaded} from '../../reducers/references';
+import reducer, {load as loadRefs, isLoaded as isRefsLoaded} from '../../redux/references';
 
-@asyncConnect([
-  // { promise: ({params, store:{dispatch, getState}}) => dispatch(loadRefs())}
-])
-@connect(
-  state => ({
-    refs: state.references,
+@connect(state => ({
+    // refs: state.references,
     errors: state.errors
-  }), {pushState: routeActions.push}
-)
+  }), {pushState: routeActions.push})
 export default class App extends Component {
   static propTypes = {
     pushState: PropTypes.func.isRequired,

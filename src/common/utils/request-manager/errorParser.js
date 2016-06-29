@@ -3,7 +3,7 @@ export default function parseError (err, body) {
     return body;
   }
   if (err instanceof Error) {
-    return err.message;
+    return err.response ? err.response.text : err.toString();
   }
   else {
     return err

@@ -8,11 +8,10 @@ import httpProxy from 'http-proxy';
 
 import { parseModel } from './middleware';
 import { checkAuth, RenderPage } from '../../../common/server/middleware';
-import { appName } from '../../../common/utils/helpers';
 import { default as routes } from '../routes';
 
 //todo сделать индивидуальным для проекта
-import reducer from '../../../common/reducers/reducer';
+// import reducer from '../../../common/redux/reducer';
 
 const proxy = httpProxy.createServer({
   target: 'http://127.0.0.1:3030/api'
@@ -32,11 +31,11 @@ proxy.on('error', (error, req, res) => {
 });
 
 
-const renderPage = RenderPage({ routes, reducer });
+const renderPage = RenderPage({ routes });
 const app = new Express();
 const server = new http.Server(app);
 const serverPort = process.env.PORT;
-const staticRoot = Path.join(__dirname,  '../../../../', `statics/${appName()}`);
+const staticRoot = Path.join(__dirname,  '../../../../', `statics/${__APPNAME__}`);
 
 app.use(compression());
 app.use(favicon(Path.join(staticRoot, 'favicon_.ico')));

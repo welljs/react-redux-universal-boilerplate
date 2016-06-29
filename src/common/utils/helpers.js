@@ -1,6 +1,9 @@
 /*
 * возвращает название приложения которое хранится в package.json
 */
-export function appName () {
-  return __SERVER__ ?  process.env.APPNAME : __APPNAME__;
+
+const config = require('../../config');
+
+export function getConfig () {
+  return config
 }

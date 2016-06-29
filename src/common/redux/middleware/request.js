@@ -1,36 +1,54 @@
 'use strict';
-import {addApiError} from '../../reducers/errors';
-export default function (request) {
-  return  function ({ dispatch, getState }) {
-    return next => action => {
+import {addApiError} from '../errors';
+import {UPDATE_LOCATION} from 'react-router-redux';
 
-      if ( typeof action === 'function' )
-        return action(dispatch, getState);
+export default function(request){
+  return function({dispatch, getState}){
+    return next =>{
+      let isLocationUpdated;
+      return action =>{
+        if(action.type == UPDATE_LOCATION && !isLocationUpdated){
+          isLocationUpdated = true;
+        }
 
-      const { promise, types, ...rest } = action;
+        if(typeof action === 'function'){
+          return action(dispatch, getState);
+        }
 
-      if ( !promise )
-        return next(action);
+        const {promise, types, ...rest} = action;
 
-      const [ REQUEST, SUCCESS, FAILURE ] = types;
-      next({...rest, type: REQUEST});
+        if(!promise){
+          return next(action);
+        }
 
-      const actionPromise = promise(request);
+        const [ REQUEST, SUCCESS, FAILURE ] = types;
+        next({...rest, type: REQUEST});
 
-      actionPromise
-        .then(
-          (result) => next({...rest, result, type: SUCCESS}),
-          (error) => {
-            dispatch(addApiError(500, error));
-            return next({...rest, error, type: FAILURE})
-          }
-        )
-        .catch(err => {
-          console.log('[REQUEST_MIDDLEWARE_ERROR]: ', err);
-          next({...rest, err, FAILURE});
-        });
+        const actionPromise = promise(request);
 
-      return actionPromise;
+        actionPromise
+          .then(
+            (result) =>{
+              next({...rest, result, type: SUCCESS})
+            },
+            (error) =>{
+              if(__SERVER__ || isLocationUpdated){
+                //если без статуса или без кода, значит какая-то непонятная хрень, надо выбросить в браузерн
+                if(!error.code || error.code - 0 > 499){
+                  dispatch(addApiError(error.code || 500, error));
+                }
+                isLocationUpdated = false;
+              }
+              return next({...rest, error, type: FAILURE})
+            }
+          )
+          .catch(err =>{
+            console.log('[REQUEST_MIDDLEWARE_ERROR]: ', err);
+            next({...rest, err, FAILURE});
+          });
+
+        return actionPromise;
+      }
     }
-  }  
+  }
 }
