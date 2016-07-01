@@ -1,11 +1,19 @@
 import React from 'react';
 import { IndexRoute, Route } from 'react-router';
 import * as Pages  from './containers';
+import {load as loadUser, isLoaded as isUserLoaded} from './redux/user/load';
 
-export default ( store ) => {
+function fetchUserData (getState, dispatch) {
+  return function (nextState, replace, next) {
+    if (!isUserLoaded(getState())) {
+      dispatch(load()).then(() => next());
+    }
+  }
+}
 
+export default ({getState, dispatch}) => {
   return (
-    <Route path="/" component={ Pages.App }>
+    <Route path="/" component={ Pages.App } onEnter={fetchUserData(getState, dispatch)} >
       <IndexRoute component={ Pages.Home }/>
       <Route path="about" component={ Pages.About }/>
       <Route path="designer/:id" component={Pages.Designer} />

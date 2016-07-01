@@ -1,4 +1,4 @@
-import { combineReducers as combine} from 'redux';
+import { combineReducers } from 'redux';
 export const cache = {};
 /**
  * @param {String} key - reducers key
@@ -12,11 +12,10 @@ export function applyReducer (key, fn, replace = false) {
   cache[key] = fn;
 }
 
-
 /**
  *
  * @param {Object} reducers - reducers that must be merged with cached
  */
-export function combineReducers (reducers = {}) {
-  return combine({...reducers, ...cache});
+export function combine (reducers = {}) {
+  return combineReducers({...reducers, ...cache});
 }

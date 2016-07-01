@@ -6,7 +6,5 @@
         "add-module-exports",
         "transform-class-properties"
     ],
-    "sourceMaps": true,
     "retainLines": true
-
 }

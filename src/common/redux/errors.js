@@ -8,7 +8,6 @@ const initialState = {
   type: null
 };
 
-
 applyReducer('errors', ( state = initialState, {type, status, reason} = {} ) => {
   switch ( type ) {
     case API_FETCHING_ERROR:

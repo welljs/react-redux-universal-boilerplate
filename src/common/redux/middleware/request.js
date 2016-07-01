@@ -6,7 +6,8 @@ export default function(request){
   return function({dispatch, getState}){
     return next =>{
       let isLocationUpdated;
-      return action =>{
+      return action => {
+        //костыль для отлова ошибок
         if(action.type == UPDATE_LOCATION && !isLocationUpdated){
           isLocationUpdated = true;
         }

@@ -29,11 +29,9 @@ export default function RenderPage ({ routes }) {
 
     
     const {originalUrl: location} = req;
-    const assets = webpackIsomorphicTools.assets();
     const history = createHistory(location);
     const requestHelper = request(req);
-    const store = createStore({history, null, requestHelper});
-
+    const store = createStore({history, data:undefined, requestHelper});
     const args = {history, routes: routes(store), location};
     match(args, (error, redirectLocation, renderProps) => {
       if (redirectLocation) {
@@ -56,8 +54,16 @@ export default function RenderPage ({ routes }) {
           const status = (errors && !!errors.error) ? 500 : getRoutesStatus(renderProps.routes);
           res.status(status || 200);
           global.navigator = {userAgent: req.headers['user-agent']};
-          res.send('<!doctype html>\n' +
-            ReactDOM.renderToString(<Html assets={webpackIsomorphicTools.assets()} component={component} store={store}/>));
+          let respText;
+          try {
+            respText = '<!doctype html>\n' +
+              ReactDOM.renderToString(<Html assets={webpackIsomorphicTools.assets()} component={component}
+                                            store={store}/>);
+          }
+          catch(e) {
+            return res.status(500).send(e.stack);
+          }
+          res.send(respText);
         });
       }
     });

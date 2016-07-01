@@ -1,8 +1,7 @@
 "use strict";
 import {getConfig} from '../../utils/helpers';
 
-const {protocol, host, apiPort: port} = getConfig();
-
+const {protocol, host, apiPort: port} = getConfig().default;
 export default function formatUrl (path) {
   //in case of full address specified
   if (~path.indexOf('http://') || ~path.indexOf('https://')) {

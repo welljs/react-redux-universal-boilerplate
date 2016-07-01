@@ -22,6 +22,6 @@ export function loginReducer(state = initialState, action = {}) {
 export function login ({email, password}) {
   return {
     types: [STATE_WAITING, STATE_SUCCESS, STATE_FAIL],
-    promise: request => request('/api/login').post({ params: {email, password} })
+    promise: request => request('/user/login').post({ params: {email, password} })
   };
 }
