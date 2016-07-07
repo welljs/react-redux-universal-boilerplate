@@ -1,12 +1,12 @@
 import React from 'react';
 import { IndexRoute, Route } from 'react-router';
 import * as Pages  from './containers';
-import {load as loadUser, isLoaded as isUserLoaded} from './redux/user/load';
+import {load as loadUser, isLoaded as isUserLoaded} from '../../common/redux/user/load';
 
 function fetchUserData (getState, dispatch) {
   return function (nextState, replace, next) {
     if (!isUserLoaded(getState())) {
-      dispatch(load()).then(() => next());
+      dispatch(loadUser()).then(() => next());
     }
   }
 }
