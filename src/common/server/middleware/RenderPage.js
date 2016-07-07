@@ -5,11 +5,11 @@ import PrettyError from 'pretty-error';
 
 import { match } from 'react-router';
 import { ReduxAsyncConnect, loadOnServer } from 'redux-async-connect';
-import { default as createStore } from '../../redux/store/create';
 import { Html } from '../misc';
 import { getRoutesStatus } from '../../router';
 import createHistory from 'react-router/lib/createMemoryHistory';
 import {server as request} from '../../../common/utils/request-manager';
+import { default as createStore } from '../../redux/store/create';
 
 const pretty = new PrettyError();
 

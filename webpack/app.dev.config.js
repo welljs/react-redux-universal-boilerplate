@@ -51,7 +51,7 @@ module.exports = {
   },
   output: {
     path:  path.resolve(__dirname, `../statics/${APPNAME}/assets/dist`),
-    publicPath: `${protocol}://${HOST}:${PORT}/${APPNAME}/assets/dist/`,
+    publicPath: `${protocol}://${HOST}:${PORT}/assets/dist/`,
     filename: 'app.js'
   },
   resolve: {

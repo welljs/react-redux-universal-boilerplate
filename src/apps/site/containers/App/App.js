@@ -25,7 +25,6 @@ export default class App extends Component {
     const {errors, children} = this.props;
     return (
       <div className="app">
-        <h3>App container</h3>
         <Page {...this.props}>
           { !!errors.reason ? <ErrorPage/> : children }
         </Page>

@@ -1,9 +1,13 @@
 import { combineReducers } from 'redux';
 export const cache = {};
+
 /**
+ * Add reducer to application reducers cache,  for further combine it with redux final reducers
+ * Use this function when you want to combine your components reducers to final reducers
  * @param {String} key - reducers key
  * @param {Function} fn - reducer
  * @param {Boolean} replace - replace existing reducer in cache
+ *
  */
 export function applyReducer (key, fn, replace = false) {
   if (!!cache[key] && !replace) {

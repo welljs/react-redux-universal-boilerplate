@@ -1,24 +1,26 @@
 'use strict';
 import React, { Component, PropTypes } from 'react';
-import { Link } from 'react-router';
+import {asyncConnect} from 'redux-async-connect';
+import {ProjectsList, loadProjects} from '../../components/ProjectsList';
 
+//page styles
 import styles from './styles.scss';
 
+//loading projects before page loaded 
+@asyncConnect([
+  {
+    key: 'projects', 
+    promise: ({params, store: {dispatch}}) => dispatch(loadProjects({limit: params.limit || 10}))
+  }
+])
 export default class Home extends Component {
   static propTypes = {};
-
-  componentDidMount () {
-    console.log('home mounted', __APPNAME__);
-  }
 
   render() {
     return (
       <div className={`${styles.mainContainer} some-other-class`}>
-        <h3>Pages</h3>
-        <ul>
-          <li>Проект: <Link to="/project/dom_na_hruschiovke">Дом на Хрущевке</Link></li>
-          <li>Автор: <Link to="/designer/12">Вася</Link></li>
-        </ul>
+        <h3>Home page</h3>
+          <ProjectsList/>
       </div>
     );
   }

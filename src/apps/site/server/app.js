@@ -5,16 +5,14 @@ import favicon from 'serve-favicon';
 import Path from 'path';
 import chalk from 'chalk';
 import httpProxy from 'http-proxy';
-
-import { parseModel } from './middleware';
-import { checkAuth, RenderPage } from '../../../common/server/middleware';
 import { default as routes } from '../routes';
+import { checkAuth, RenderPage } from '../../../common/server/middleware';
+import {getConfig} from '../../../common/utils/helpers';
 
-//todo сделать индивидуальным для проекта
-// import reducer from '../../../common/redux/reducer';
+const {apiPort} = getConfig().default;
 
 const proxy = httpProxy.createServer({
-  target: 'http://127.0.0.1:3030/api'
+  target: `http://127.0.0.1:${apiPort}/api`
 });
 
 proxy.on('error', (error, req, res) => {

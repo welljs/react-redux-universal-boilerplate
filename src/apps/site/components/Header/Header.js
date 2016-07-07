@@ -7,7 +7,7 @@ export default class Header extends Component {
   render() {
     return (
       <div>
-        Site header
+        Demo project
       </div>
     );
   }

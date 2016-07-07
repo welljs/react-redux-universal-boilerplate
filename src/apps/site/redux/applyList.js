@@ -1,4 +1,3 @@
 /**
  */
-import {default as userInfo} from '../../../common/redux/user'
-export {userInfo};
+export {default as userInfo} from '../../../common/redux/user';
