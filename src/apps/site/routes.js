@@ -20,7 +20,7 @@ export default ({getState, dispatch}) => {
       <IndexRoute component={ Pages.Home }/>
       <Route path="about" component={ Pages.About }/>
       <Route path="designer/:id" component={Pages.Designer} />
-      <Route path="/project/:id" component={Pages.Project} />
+      <Route path="/project/:id(/)" component={Pages.Project} />
       <Route path="*" component={ Pages.NotFound } status={ 404 } />
     </Route>
   );

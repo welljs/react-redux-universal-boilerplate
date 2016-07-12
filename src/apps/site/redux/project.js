@@ -1,8 +1,12 @@
-const PROJECT_INFO_WAITING = 'PROJECT_INFO_WAITING';
-const PROJECT_INFO_SUCCESS = 'PROJECT_INFO_SUCCESS';
-const PROJECT_INFO_FAIL = 'PROJECT_INFO_FAIL';
+const PROJECT_INFO_WAITING = 'PROJECT_INFO@STATE_WAITING';
+const PROJECT_INFO_SUCCESS = 'PROJECT_INFO@STATE_SUCCESS';
+const PROJECT_INFO_FAIL = 'PROJECT_INFO@STATE_FAIL';
 
-const initialState = {};
+const initialState = {
+  loadWaiting: false,
+  loadFail: false,
+  isLoaded: false
+};
 
 export default function reducer ( state = initialState, action = {} ) {
   switch ( action.type ) {
@@ -28,6 +32,5 @@ export function load (id) {
   return {
     types: [PROJECT_INFO_WAITING, PROJECT_INFO_SUCCESS, PROJECT_INFO_FAIL],
     promise: request => request(`/project/${id}`).get({})
-
   }
 }

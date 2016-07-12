@@ -1,5 +1,6 @@
 'use strict';
 import React, {Component, PropTypes} from 'react';
+import {Link} from 'react-router';
 
 import styles from './ProjectsList.scss';
 
@@ -15,8 +16,8 @@ export default class ProjectItem extends Component {
     const {url, author, name} = this.props;
     return (
       <li>
-        <p><a href={`/projects/${url}/`}>{name}</a></p>
-        <p>Author: <a href={`/designers/${author.id}/`}>{author.name}</a></p>
+        <p><Link to={`/project/${url}/`}>{name}</Link></p>
+        <p>Author: <Link to={`/designers/${author.id}/`}>{author.name}</Link></p>
       </li>
     );
   }

@@ -1,5 +1,7 @@
-export function load () {
+export function load (name) {
   return new Promise (resolve => {
-    resolve({name: 'Example project', description: 'React/Redux application boilerplate'});
+    setTimeout(() => {
+      resolve({name, description: 'Example project'});
+    }, 500);
   });
 }
