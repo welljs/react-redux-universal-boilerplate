@@ -7,8 +7,15 @@ const appReducers = require(`../../../apps/${__APPNAME__}/redux/applyList`);
 
 const reducer = combineReducers({...appReducers, ...commonReducers});
 
+
+const shniaga = store => next => action => {
+  console.log('shnyaga stat', action);
+  return next(action);
+}
+
+
 export default function createStore({history, data, requestHelper}) {
   const reduxRouterMiddleware = syncHistory(history);
-  let finalCreateStore = applyMiddleware(...[requestMiddleware(requestHelper), reduxRouterMiddleware])(reduxCreateStore);
+  let finalCreateStore = applyMiddleware(...[requestMiddleware(requestHelper), reduxRouterMiddleware], shniaga)(reduxCreateStore);
   return finalCreateStore(reducer, data);
 }

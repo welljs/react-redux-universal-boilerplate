@@ -10,6 +10,7 @@ applyRequestReducers();
 @asyncConnect([
   {
     key: 'project', promise: ({params, store: {getState}}) => {
+    console.log('async jopa', getState().project.load);
       return getState().project.load.request(params.id);
     }
   }

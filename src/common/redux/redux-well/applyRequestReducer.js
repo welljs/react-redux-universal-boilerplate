@@ -5,23 +5,24 @@ function createReducer ({storeKey, reducerName, onSuccess, onError, promise}) {
   const WAITING_STATE = `${storeKey}@${reducerName}.waiting`;
   const SUCCESS_STATE = `${storeKey}@${reducerName}.success`;
   const FAIL_STATE = `${storeKey}@${reducerName}.fail`;
-  return function reducer (state = {isFailed: false, isWaiting: false}, action = {}) {
-    switch (action.type) {
-      case WAITING_STATE:
-        return {...state, isWaiting: true, isFailed: false};
-      case SUCCESS_STATE: 
-        return {...state, isWaiting: false, isFailed: false};
-      case FAIL_STATE: 
-        return {...state, isWaiting: false, isFailed: true};
+  return {
+    reducer (state = {isFailed: false, isWaiting: false}, action = {}) {
+      switch (action.type) {
+        case WAITING_STATE:
+          return {...state, isWaiting: true, isFailed: false};
+        case SUCCESS_STATE:
+          return {...state, isWaiting: false, isFailed: false};
+        case FAIL_STATE:
+          return {...state, isWaiting: false, isFailed: true};
+      }
+    },
+    request () {
+      return {
+        types: [WAITING_STATE, SUCCESS_STATE, FAIL_STATE],
+        promise
+      }
     }
-  }
-
-  function createRequestAction (promise) {
-    return {
-      types: [WAITING_STATE, SUCCESS_STATE, FAIL_STATE],
-      promise
-    }
-  }
+  };
 }
 
 
@@ -51,9 +52,9 @@ const defaultOptions = {
  */
 export function applyRequestReducer (storeKey, reducers, replace = false) {
   const finalReducers = Object.entries(reducers).reduce((prevReducer, [reducerName, options], index) => {
-    console.log(prevReducer);
-    console.log(reducerName);
-    console.log(options);
+    // console.log(prevReducer);
+    // console.log(reducerName);
+    // console.log(options);
     prevReducer.push(createReducer({storeKey, reducerName, ...defaultOptions, ...options}));
   }, []);
   return applyReducer(storeKey, localCompose(...finalReducers), replace);
