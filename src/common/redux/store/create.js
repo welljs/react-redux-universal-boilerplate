@@ -8,10 +8,10 @@ const appReducers = require(`../../../apps/${__APPNAME__}/redux/applyList`);
 const reducer = combineReducers({...appReducers, ...commonReducers});
 
 
-const shniaga = store => next => action => {
-  console.log('shnyaga stat', action);
+const shniaga = ({getState, dispatch}) => next => action => {
+  console.log('shnyaga>>>\n', getState().project, '\n----------');
   return next(action);
-}
+};
 
 
 export default function createStore({history, data, requestHelper}) {

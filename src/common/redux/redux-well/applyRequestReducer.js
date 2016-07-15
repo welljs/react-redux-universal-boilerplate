@@ -1,12 +1,13 @@
 import {localCompose} from './localCompose';
 import {applyReducer} from './reducers';
 
-function createReducer ({storeKey, reducerName, onSuccess, onError, promise}) {
+function createReducer ({storeKey, reducerName, promise, ...rest}) {
+  console.log('initials >', {...rest, isFailed: false, isWaiting: false});
   const WAITING_STATE = `${storeKey}@${reducerName}.waiting`;
   const SUCCESS_STATE = `${storeKey}@${reducerName}.success`;
   const FAIL_STATE = `${storeKey}@${reducerName}.fail`;
   return {
-    reducer (state = {isFailed: false, isWaiting: false}, action = {}) {
+    reducer (state = {...rest, isFailed: false, isWaiting: false}, action = {}) {
       switch (action.type) {
         case WAITING_STATE:
           return {...state, isWaiting: true, isFailed: false};
@@ -52,9 +53,7 @@ const defaultOptions = {
  */
 export function applyRequestReducer (storeKey, reducers, replace = false) {
   const finalReducers = Object.entries(reducers).reduce((prevReducer, [reducerName, options], index) => {
-    // console.log(prevReducer);
-    // console.log(reducerName);
-    // console.log(options);
+    // const reducer =
     prevReducer.push(createReducer({storeKey, reducerName, ...defaultOptions, ...options}));
   }, []);
   return applyReducer(storeKey, localCompose(...finalReducers), replace);

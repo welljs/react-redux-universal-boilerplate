@@ -10,7 +10,7 @@ applyRequestReducers();
 @asyncConnect([
   {
     key: 'project', promise: ({params, store: {getState}}) => {
-    console.log('async jopa', getState().project.load);
+    console.log('async jopa', getState().project.login.submit({limit:15}));
       return getState().project.load.request(params.id);
     }
   }
