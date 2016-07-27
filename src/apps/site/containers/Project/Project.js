@@ -2,17 +2,11 @@
 import React, { Component, PropTypes } from 'react';
 import {asyncConnect} from 'redux-async-connect';
 import {connect} from 'react-redux';
-
-import {default as applyRequestReducers} from './requestReducers';
-
-applyRequestReducers();
+import {load as loadProject} from '../../redux/project';
 
 @asyncConnect([
   {
-    key: 'project', promise: ({params, store: {getState}}) => {
-    console.log('async jopa', getState().project.login.submit({limit:15}));
-      return getState().project.load.request(params.id);
-    }
+    key: 'project', promise: ({params, store: {getState, dispatch}}) => dispatch(loadProject(params.id))
   }
 ])
 @connect(state => ({
