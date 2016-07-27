@@ -6,7 +6,7 @@ import {load as loadUser, isLoaded as isUserLoaded} from './redux/user/load';
 function fetchUserData (getState, dispatch) {
   return function (nextState, replace, next) {
     if (!isUserLoaded(getState())) {
-      dispatch(load()).then(() => next());
+      dispatch(loadUser()).then(() => next());
     }
   }
 }
