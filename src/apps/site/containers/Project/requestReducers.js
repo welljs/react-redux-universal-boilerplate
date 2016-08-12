@@ -6,12 +6,15 @@ export default function () {
       initialState: {
         foo: 'bar'
       },
-      submit: ({limit}) => request => request('/api/project/').get({params: {limit}}),
+      promise: (project_id) => request => {
+        debugger;
+        return request('/api/project/').get({params: {limit}})
+      },
       onSuccess: (state, action) => ({...state, customSuccessProp: true}),
       onFail: (state, action) => ({...state, customErrorProp: true})
     },
     login: {
-      submit: ({email, pass}) => request => request('/user/login').post({data:{email, pass}})
+      promise: ({email, pass}) => request => request('/user/login').post({data:{email, pass}})
     }
   });
 };

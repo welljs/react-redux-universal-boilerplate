@@ -14,7 +14,7 @@
       "command": "webpack --watch --config webpack/app.dev.config.js",
       "env": {
         "APPNAME": "site",
-        "PORT": 4000,
+        "PORT": 7000,
         "NODE_ENV": "dev"
       }
     },

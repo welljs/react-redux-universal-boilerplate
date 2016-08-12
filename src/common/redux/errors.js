@@ -1,4 +1,4 @@
-import {applyReducer} from './store/reducers';
+import {applyReducer} from './redux-well/reducers';
 
 const API_FETCHING_ERROR = 'API_FETCHING_ERROR';
 

@@ -2,7 +2,7 @@
 import React, {Component, PropTypes} from 'react';
 import {connect} from 'react-redux';
 import ProjectItem from './ProjectItem';
-import {applyReducer} from '../../../../common/redux/store/reducers';
+import {applyReducer} from '../../../../common/redux/redux-well/reducers';
 import {default as reducer} from './redux';
 
 //adding combined with localCombine component reducers to reducers cache with key 'projects'

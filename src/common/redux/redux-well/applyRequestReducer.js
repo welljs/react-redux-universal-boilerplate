@@ -1,13 +1,18 @@
 import {localCompose} from './localCompose';
 import {applyReducer} from './reducers';
 
-function createReducer ({storeKey, reducerName, promise, ...rest}) {
-  console.log('initials >', {...rest, isFailed: false, isWaiting: false});
+
+const commonInitialState = {
+  data: {},
+  reducers: []
+};
+
+function createReducer ({storeKey, reducerName, promise, initialState = {}}) {
   const WAITING_STATE = `${storeKey}@${reducerName}.waiting`;
   const SUCCESS_STATE = `${storeKey}@${reducerName}.success`;
   const FAIL_STATE = `${storeKey}@${reducerName}.fail`;
   return {
-    reducer (state = {...rest, isFailed: false, isWaiting: false}, action = {}) {
+    reducer (state = {...initialState, isFailed: false, isWaiting: false}, action = {}) {
       switch (action.type) {
         case WAITING_STATE:
           return {...state, isWaiting: true, isFailed: false};
@@ -15,17 +20,21 @@ function createReducer ({storeKey, reducerName, promise, ...rest}) {
           return {...state, isWaiting: false, isFailed: false};
         case FAIL_STATE:
           return {...state, isWaiting: false, isFailed: true};
+        default: return state;
       }
     },
     request () {
+      const args = arguments;
       return {
-        types: [WAITING_STATE, SUCCESS_STATE, FAIL_STATE],
-        promise
+        types: [ WAITING_STATE, SUCCESS_STATE, FAIL_STATE ],
+        promise: request => {
+          debugger;
+          promise.call(args)
+        }
       }
     }
   };
 }
-
 
 //todo проверить можно ли без замыкания
 function createDefaultReducer () {
@@ -34,8 +43,7 @@ function createDefaultReducer () {
   }
 }
 
-const defaultOptions = {
-  initialState: {},
+const defaultRequestOptions = {
   onSuccess: createDefaultReducer(),
   onFail: createDefaultReducer(),
   promise: Promise.resolve()
@@ -52,9 +60,14 @@ const defaultOptions = {
  * @param {Boolean} replace - replace existing reducer in cache
  */
 export function applyRequestReducer (storeKey, reducers, replace = false) {
-  const finalReducers = Object.entries(reducers).reduce((prevReducer, [reducerName, options], index) => {
-    // const reducer =
-    prevReducer.push(createReducer({storeKey, reducerName, ...defaultOptions, ...options}));
-  }, []);
-  return applyReducer(storeKey, localCompose(...finalReducers), replace);
+  const finalState = Object.entries(reducers).reduce((prevState, [reducerName, options]) => {
+    let {initialState, ...optionsRest} = options;
+    initialState = Object.assign(prevState, initialState);
+    const {promise, ...summary} = {...defaultRequestOptions, ...optionsRest};
+    const reducer = createReducer({storeKey, reducerName, initialState, promise});
+    prevState[reducerName] = {...reducer, ...summary};
+    prevState.reducers.push(reducer.reducer);
+    return prevState;
+  }, commonInitialState);
+  return applyReducer(storeKey, localCompose(...finalState.reducers), replace);
 }

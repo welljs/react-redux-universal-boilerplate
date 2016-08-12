@@ -2,11 +2,19 @@
 import React, { Component, PropTypes } from 'react';
 import {asyncConnect} from 'redux-async-connect';
 import {connect} from 'react-redux';
-import {load as loadProject} from '../../redux/project';
+// import {load as loadProject} from '../../redux/project';
+import requestReducers from './requestReducers';
+
+
+requestReducers();
 
 @asyncConnect([
   {
-    key: 'project', promise: ({params, store: {getState, dispatch}}) => dispatch(loadProject(params.id))
+    // key: 'project', promise: ({params, store: {getState, dispatch}}) => dispatch(loadProject(params.id))
+    key: 'project', promise: ({params, store: {getState, dispatch}}) => {
+      const state = getState();
+      return state.project.load.request(params.id);
+   }
   }
 ])
 @connect(state => ({

@@ -5,6 +5,8 @@
  */
 export function localCompose (...reducers) {
   return function (state, action) {
-    return reducers.reduce((prevState, currentReducer) => currentReducer(prevState, action), state);
+    return reducers.reduce((prevState, currentReducer) => {
+      return currentReducer(prevState, action)
+    }, state);
   }
 }
