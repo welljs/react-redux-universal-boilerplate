@@ -32,7 +32,7 @@ const plugins = [
   // new ExtractTextPlugin('common.css'),
   webpackIsomorphicToolsPlugin.development()
 ];
-var devtool = 'source-map';
+var devtool = 'inline-source-map';
 if ( __HMR_ENABLE__ ) {
   entryApp.push('webpack-hot-middleware/client');
   plugins.push(new webpack.HotModuleReplacementPlugin());

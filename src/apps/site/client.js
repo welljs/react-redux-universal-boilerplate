@@ -9,9 +9,13 @@ import routes from './routes';
 
 //to be sure that all reducers are applied createStore must be imported after import routes
 import { default as createStore } from '../../common/redux/store/create';
+import{createRequestReducer} from '../../common/redux/redux-well/applyRequestReducer';
+
 
 const history = useScroll( () => browserHistory)();
 const appStore = createStore({history, data: window.__initialData.store, requestHelper});
+createRequestReducer(appStore);
+
 
 function routerRender (props) {
   return <ReduxAsyncConnect {...props} helpers={{request: requestHelper}} filter={item => !item.deffered}/>

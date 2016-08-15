@@ -6,9 +6,14 @@ import * as commonReducers from '../applyList';
 
 const appReducers = require(`../../../apps/${__APPNAME__}/redux/applyList`);
 
+const xxx = ({getState, dispatch}) => next => action => {
+  console.log('-----\ncreate.js > ', 'xxx', '\n------');
+  return next(action);
+};
+
 export default function createStore({history, data, requestHelper}) {
   const reducer = combineReducers({...appReducers, ...commonReducers});
   const reduxRouterMiddleware = syncHistory(history);
-  let finalCreateStore = applyMiddleware(...[requestMiddleware(requestHelper), reduxRouterMiddleware])(reduxCreateStore);
+  let finalCreateStore = applyMiddleware(...[requestMiddleware(requestHelper), reduxRouterMiddleware], xxx)(reduxCreateStore);
   return finalCreateStore(reducer, data);
 }
