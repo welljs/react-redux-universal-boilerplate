@@ -4,11 +4,8 @@ import { connect } from 'react-redux';
 import { Page } from '../../components';
 import { default as ErrorPage } from '../ErrorPage/ErrorPage';
 import {routeActions} from 'react-router-redux';
-import { asyncConnect } from 'redux-async-connect';
-import reducer, {load as loadRefs, isLoaded as isRefsLoaded} from '../../redux/references';
 
 @connect(state => ({
-    // refs: state.references,
     errors: state.errors
   }), {pushState: routeActions.push})
 export default class App extends Component {

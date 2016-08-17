@@ -3,7 +3,7 @@ import React, { Component, PropTypes } from 'react';
 import {asyncConnect} from 'redux-async-connect';
 import {connect} from 'react-redux';
 import applyRequestReducers from './requestReducers';
-import {requestReducer} from '../../../../common/redux/redux-well/applyRequestReducer';
+import {requestReducer} from 'easy-redux';
 
 
 applyRequestReducers();

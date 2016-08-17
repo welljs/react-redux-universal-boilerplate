@@ -1,4 +1,4 @@
-import {localCompose} from '../../../../../common/redux/redux-well/localCompose';
+import {localCompose} from 'easy-redux';
 import {loadReducer} from './load';
 
 export default localCompose(loadReducer);

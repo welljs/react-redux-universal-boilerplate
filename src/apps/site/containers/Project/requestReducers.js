@@ -1,14 +1,12 @@
-import {applyRequestReducer} from '../../../../common/redux/redux-well/applyRequestReducer';
+import {applyRequestReducers} from 'easy-redux';
 
 export default function () {
-  applyRequestReducer('project', {
+  applyRequestReducers('project', {
     load: {
       initialState: {
         foo: 'bar'
       },
-      promise: request => (id) => request(`/project/${id}`).get({}),
-      onSuccess: (state, action) => ({...state, data: action.result, customSuccessProp: true}),
-      onFail: (state, action) => ({...state, customErrorProp: true})
+      promise: request => (id) => request(`/project/${id}`).get({})
     },
     login: {
       promise: ({email, pass}) => request => request('/user/login').post({data:{email, pass}})

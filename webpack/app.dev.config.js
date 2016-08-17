@@ -56,9 +56,11 @@ module.exports = {
   },
   resolve: {
     root: path.resolve(__dirname),
-
+    // alias: {
+    //     'easy-redux': path.join(__dirname, '../../easy-redux/lib/index.js'),
+    // },
     extensions: ['', '.js', '.jsx'],
-    modulesDirectories: [ 'node_modules', 'out', 'statics']
+    // modulesDirectories: [ 'node_modules', 'out', 'statics', '../node_modules']
   },
   module: {
     loaders: [
